@@ -59,6 +59,12 @@ export default function Home() {
         }));
     };
 
+    // For handling Post Comments 
+
+    const handleComments = (post) => {
+        console.log(post)
+    };
+
     return (
         <main>
             {
@@ -134,7 +140,7 @@ export default function Home() {
                                                         </span>
                                                     </button>
                                                     {/* For comment  */}
-                                                    <button className="bookmarkBtn">
+                                                    <button className="bookmarkBtn" onClick={()=>{handleComments(post)}}>
                                                         <span className="IconContainer">
                                                             <svg
                                                                 fill="white"
