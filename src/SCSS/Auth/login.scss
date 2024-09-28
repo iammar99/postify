@@ -1,0 +1,189 @@
+
+// =======================================  LOGIN =======================================
+
+h1.login-heading  {
+    position: absolute;
+    color: white;
+    top: 18px;
+    font-size: 150px;
+    font-weight: 900;
+}
+
+form {
+    width: 45%;
+    padding: 65px 57px;
+    border-radius: 11px;
+    color: white;
+    font-size: 22px;
+    // glass morphism
+    background: rgba(225, 225, 225, 0.2);
+    box-shadow: 0 4px 30px rgba(225, 225, 225, 0.2);
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.form-main {
+    background-image: url(../../Assets/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+// ----------------------- eye animation ----------------------
+/*------ Settings ------*/
+.eye-container {
+    --color: #a5a5b0;
+    --size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--size);
+    user-select: none;
+    fill: var(--color);
+}
+
+.eye-container .eye {
+    position: absolute;
+    animation: keyframes-fill .5s;
+    right: 13px;
+    bottom: 4px;
+}
+
+.eye-container .eye-slash {
+    position: absolute;
+    animation: keyframes-fill 0.5s;
+    display: none;
+    right: 13px;
+    bottom: 4px;
+}
+
+/* ------ On check event ------ */
+.eye-container input:checked~.eye {
+    display: none;
+}
+
+.eye-container input:checked~.eye-slash {
+    display: block;
+}
+
+/* ------ Hide the default checkbox ------ */
+.eye-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+//   ---------------- form-links ---------------- 
+
+a.form-links {
+    position: relative;
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+    height: fit-content;
+    transition: all 0.3s ease-in-out;
+}
+a.form-links:hover {
+    color: $themeColor;
+}
+
+a.form-links:after{
+    content: "";
+    position: absolute;
+    background-color: $themeColor;
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: -10px;
+    transition: 0.3s;
+} 
+a.form-links:hover:after{
+    width: 100%;
+}
+
+
+
+// =======================================  Register =======================================
+
+.register-heading {
+    position: absolute;
+    color: white;
+    top: -22px;
+    font-size: 150px;
+    font-weight: 900;
+}
+
+form.register {
+    padding: 32px 45px;
+}
+
+// =======================================  Register =======================================
+
+.reset-heading {
+    position: absolute;
+    color: white;
+    top: 170px;
+    font-size: 71px;
+    font-weight: 900;
+}
+
+form.reset{
+    padding: 32px 45px;
+}
+
+
+// =======================================  Media Queries =======================================
+
+@media screen and (max-width:991px) {
+    form ,form.register{
+        width: 70%;
+    }
+    .reset-heading {
+        top: 181px;
+        font-size: 60px;
+    }
+}
+
+
+@media screen and (max-width:551px) {
+    form , form.register{
+        width: 100%;
+    }
+ .register-heading {
+        top: 9px;
+        font-size: 100px;
+    }
+    .reset-heading {
+        top: 193px;
+        font-size: 45px;
+    }
+}
+
+@media screen and (max-width:441px) {
+    h1.login-heading  {
+        top: 31px;
+        font-size: 130px;
+    }
+
+    .register-heading {
+        top: 62px;
+        font-size: 70px;
+    }
+
+}

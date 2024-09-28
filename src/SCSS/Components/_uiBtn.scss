@@ -1,0 +1,108 @@
+// uiverse button template
+
+.submit-button {
+  width: 90px;
+  height: 40px;
+  position: relative;
+  font-family: var(--font);
+  color: #3b82f6;
+  font-weight: 600;
+  background-color: #fff;
+  border: none;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  transition: all ease 100ms;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.submit-button:hover {
+  background-color: #cbdcf8;
+}
+
+.submit-button:focus {
+  background-color: #cbdcf8;
+}
+
+
+.submit {
+  transition: all ease 100ms;
+  opacity: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//  Like btns
+
+.LikeBtn {
+  width: 140px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: none;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.089);
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.leftContainer {
+  width: 60%;
+  height: 100%;
+  background-color: rgb(238, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.leftContainer .like {
+  color: white;
+  font-weight: 600;
+}
+
+.likeCount {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(238, 0, 0);
+  font-weight: 600;
+  position: relative;
+  background-color: white;
+}
+
+.likeCount::before {
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  content: "";
+  background-color: rgb(255, 255, 255);
+  transform: rotate(45deg);
+  left: -4px;
+}
+
+.Btn:hover .leftContainer {
+  background-color: rgb(219, 0, 0);
+}
+
+.Btn:active .leftContainer {
+  background-color: rgb(201, 0, 0);
+}
+
+.Btn:active .leftContainer svg {
+  transform: scale(1.15);
+  transform-origin: top;
+}

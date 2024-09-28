@@ -1,0 +1,37 @@
+// -------------- Variable --------------
+$themeColor : #5dade2;
+// -------------- Components --------------
+@import './SCSS/Components/mobile_nav';
+@import './SCSS/Components/bootstrap';
+@import './SCSS/Components/ScreenLoader';
+@import './SCSS/Components/footer.scss';
+@import './SCSS/Components/header.scss';
+@import './SCSS/Components/spinner.scss';
+@import './SCSS/Components/uiBtn';
+@import './SCSS/Components/dataLoader';
+// -------------- Auth --------------
+@import './SCSS/auth/login.scss';
+// -------------- Dashboard --------------
+@import './SCSS/Dashboard/profile.scss';
+@import './SCSS/Dashboard/setting.scss';
+@import "./SCSS/Dashboard/addPost.scss";
+// -------------- Frontend --------------
+@import './SCSS/Frontend/home.scss';
+
+
+
+
+
+#root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main{
+    flex: 1 0 auto;
+}
+
+::-webkit-scrollbar{
+    display : none;
+}
