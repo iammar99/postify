@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { auth, fireStore } from 'Config/firebase'
+import { auth, fireStore, storage } from 'Config/firebase'
 import { signOut } from 'firebase/auth'
+import { ref, deleteObject } from "firebase/storage";
 import { collection, query, where, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { useAuthContext } from 'Context/AuthContext';
 import { message } from 'antd'
 import userImg from "../../Assets/user.png"
 import Loader from 'Components/DataLoader/Loader';
-// import {  updateDoc } from "firebase/firestore";
 
 
 
@@ -65,7 +65,7 @@ export default function Profile() {
         signOut(auth)
             .then(() => {
                 localStorage.setItem("Token", "False")
-                localStorage.setItem("user", {})
+                localStorage.removeItem("user")
                 dispatch({ type: "Set_Logged_Out", payload: {} })
                 message.success("Loggoed Out")
 
@@ -105,6 +105,13 @@ export default function Profile() {
             return doc.Postid !== post.Postid
         })
         await deleteDoc(doc(fireStore, "Posts", post.Postid));
+        const desertRef = ref(storage, "postImages/" + post.imgName);
+        // Delete the file
+        deleteObject(desertRef).then(() => {
+            // File deleted successfully
+        }).catch((error) => {
+            // Uh-oh, an error occurred!
+        });
         setPosts(newArr)
     }
 
@@ -196,7 +203,7 @@ export default function Profile() {
                                                     const fullText = post.text
                                                     return (
                                                         <>
-                                                            <div className="col-md-4 col-sm-6 col-12">
+                                                            <div className="col-md-4 col-sm-6 col-12" >
                                                                 <div className="homePostCard" key={index}>
                                                                     <div className="d-flex justify-content-between align-items-center">
                                                                         <div className="post-profile">

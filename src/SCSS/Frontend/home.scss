@@ -25,69 +25,180 @@ img.post-profileImg {
 
 // post comments 
 
-/* From Uiverse.io by vinodjangid07 */ 
-.bookmarkBtn {
-    width: 130px;
-    height: 40px;
-    border-radius: 40px;
-    border: none;
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition-duration: .3s;
-    overflow: hidden;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.062);
+/* From Uiverse.io by vinodjangid07 */
+
+.CommentBtn {
+    .bookmarkBtn {
+        width: 130px;
+        height: 40px;
+        border-radius: 40px;
+        border: none;
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        cursor: pointer;
+        transition-duration: .3s;
+        overflow: hidden;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.062);
+    }
+
     .IconContainer {
-      width: 30px;
-      height: 30px;
-      background-color: $themeColor;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      z-index: 2;
-      transition-duration: .3s;
+        width: 30px;
+        height: 30px;
+        background-color: $themeColor;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        z-index: 2;
+        transition-duration: .3s;
     }
-    
+
     .icon {
-      border-radius: 1px;
+        border-radius: 1px;
     }
-    
-    .text {
-      height: 100%;
-      width: 90px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgb(26, 26, 26);
-      z-index: 1;
-      transition-duration: .3s;
-      font-size: 1.04em;
-      font-weight: 600;
+
+    p.comment-text {
+        height: 100%;
+        width: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(26, 26, 26);
+        z-index: 1;
+        transition-duration: .3s;
+        font-size: 1.04em;
+        font-weight: 600;
     }
-    
-  }
-  
-  .bookmarkBtn:hover .IconContainer {
-    width: 120px;
-    border-radius: 40px;
-    transition-duration: .3s;
-  }
-  
-  .bookmarkBtn:hover .text {
-    transform: translate(10px);
-    width: 0;
-    font-size: 0;
-    transition-duration: .3s;
-  }
-  
-  .bookmarkBtn:active {
-    transform: scale(0.95);
-    transition-duration: .3s;
-  }
+
+    .bookmarkBtn:hover .IconContainer {
+        width: 120px;
+        border-radius: 40px;
+        transition-duration: .3s;
+    }
+
+    .bookmarkBtn:hover .comment-text {
+        transform: translate(10px);
+        width: 0;
+        font-size: 0;
+        transition-duration: .3s;
+    }
+
+    .bookmarkBtn:active {
+        transform: scale(0.95);
+        transition-duration: .3s;
+    }
+}
+
+.comment-section {
+
+    /* From Uiverse.io by G4b413l */
+    .group {
+        position: relative;
+    }
+
+    .input {
+        font-size: 16px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 200px;
+        border: none;
+        border-bottom: 1px solid #515151;
+        background: transparent;
+    }
+
+    .input:focus {
+        outline: none;
+    }
+
+    label {
+        color: #999;
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 5px;
+        top: 10px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+    .input:focus~label,
+    .input:valid~label {
+        top: -20px;
+        font-size: 14px;
+        color: $themeColor;
+    }
+
+    .bar {
+        position: relative;
+        display: block;
+        width: 200px;
+    }
+
+    .bar:before,
+    .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: $themeColor;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+    .bar:before {
+        left: 50%;
+    }
+
+    .bar:after {
+        right: 50%;
+    }
+
+    .input:focus~.bar:before,
+    .input:focus~.bar:after {
+        width: 50%;
+    }
+
+    .highlight {
+        position: absolute;
+        height: 60%;
+        width: 100px;
+        top: 25%;
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .input:focus~.highlight {
+        animation: inputHighlighter 0.3s ease;
+    }
+
+    @keyframes inputHighlighter {
+        from {
+            background: $themeColor;
+        }
+
+        to {
+            width: 0;
+            background: transparent;
+        }
+    }
+}
+
+.commenter-profile{
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+}
+
+
+//   Media query
 
 @media screen and (max-width:551px) {
     .post-card {

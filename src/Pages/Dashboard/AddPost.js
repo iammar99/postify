@@ -24,44 +24,9 @@ export default function AddPost() {
   let month = new Date().getMonth()
   let day = new Date().getDate()
   let year = new Date().getFullYear()
-  switch (month) {
-    case 0:
-      month = "January"
-      break
-    case 1:
-      month = "February"
-      break
-    case 2:
-      month = "March"
-      break
-    case 3:
-      month = "April"
-      break
-    case 4:
-      month = "May"
-      break
-    case 5:
-      month = "June"
-      break
-    case 6:
-      month = "July"
-      break
-    case 7:
-      month = "August"
-      break
-    case 8:
-      month = "September"
-      break
-    case 9:
-      month = "October"
-      break
-    case 10:
-      month = "November"
-      break
-    case 11:
-      month = "Decenber"
-      break
-  }
+
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  month = months[month]
   let today = `${day} ${month} ${year}`
 
   // Id
@@ -119,7 +84,8 @@ export default function AddPost() {
               text: text.post,
               imageUrl,
               Postid,
-              likes: 0
+              likes: 0,
+              imgName : file.name
             }
             if (imageUrl) {
               setIsProccessing(false)
