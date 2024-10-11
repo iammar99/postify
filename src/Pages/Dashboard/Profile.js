@@ -8,6 +8,7 @@ import { useAuthContext } from 'Context/AuthContext';
 import { message } from 'antd'
 import userImg from "../../Assets/user.png"
 import Loader from 'Components/DataLoader/Loader';
+import ReactQuill from 'react-quill';
 
 
 
@@ -199,8 +200,11 @@ export default function Profile() {
                                             {
                                                 posts.map((post, index) => {
                                                     const isExpanded = expandedPosts[post.Postid];
-                                                    const text = post.text.substring(0, 100) + "..."
-                                                    const fullText = post.text
+                                                    const textLimit = 100;
+                                                    const isLongPost = post.text.length > textLimit; // Check if post is long
+                                                    const text = post.text.substring(0, textLimit) + "...";
+                                                    const fullText = post.text;
+                                                    // For handling comment section
                                                     return (
                                                         <>
                                                             <div className="col-md-4 col-sm-6 col-12" >
@@ -244,13 +248,22 @@ export default function Profile() {
                                                                     </div>
                                                                     <p>
                                                                         {/* Conditional rendering for full or short text */}
-                                                                        {!isExpanded ? text : fullText}
-                                                                        <Link
-                                                                            onClick={() => handleToggle(post.Postid)} // Use Postid for toggling
-                                                                            style={{ marginLeft: '5px', cursor: 'pointer' }}
-                                                                        >
-                                                                            {!isExpanded ? "Read More" : "Read Less"}
-                                                                        </Link>
+                                                                        {/* For controlling length of the post */}
+                                                                        <ReactQuill
+                                                                            value={isExpanded ? fullText : post.text.substring(0, 100) + '...'}
+                                                                            readOnly={true} // Set to read-only mode since it's for display
+                                                                            theme="bubble" // You can also use 'snow' or 'bubble' themes
+                                                                        />
+                                                                        {
+                                                                            isLongPost && (
+                                                                                <Link
+                                                                                    onClick={() => handleToggle(post.Postid)} // Use Postid for toggling
+                                                                                    style={{ marginLeft: '5px', cursor: 'pointer' }}
+                                                                                >
+                                                                                    {!isExpanded ? "Read More" : "Read Less"}
+                                                                                </Link>
+                                                                            )
+                                                                        }
                                                                     </p>
                                                                     {
                                                                         post.imageUrl ?
