@@ -9,6 +9,7 @@ import { Space, Input, Button, message } from 'antd'; // For comment input
 import Heart from 'Components/OtherComponents/Heart';
 import EditPencil from 'Components/OtherComponents/EditPencil';
 import DelBin from 'Components/OtherComponents/DelBin';
+import ReactQuill from 'react-quill';
 
 export default function Home() {
 
@@ -235,7 +236,11 @@ export default function Home() {
                             posts.map((post, i) => {
                                 // For handling length of description
                                 const isExpanded = expandedPosts[post.Postid];
-                                const text = post.text.substring(0, 100) + "...";
+                                // const text = post.text.substring(0, 100) + "...";
+                                // const fullText = post.text;
+                                const textLimit = 100;
+                                const isLongPost = post.text.length > textLimit; // Check if post is long
+                                const text = post.text.substring(0, textLimit) + "...";
                                 const fullText = post.text;
                                 // For handling comment section 
                                 const isCommenting = commentingPosts[post.Postid];
@@ -249,12 +254,19 @@ export default function Home() {
                                                     {post.createrUsername}
                                                 </b>
                                             </div>
-                                            <p>
+                                            <p style={{"height":"fit-content"}}>
                                                 {/* For controlling length of the post */}
-                                                {!isExpanded ? text : fullText}
-                                                <Link onClick={() => handleLengthToggle(post.Postid)}>
-                                                    {!isExpanded ? "Read More" : "Read Less"}
-                                                </Link>
+                                                <ReactQuill
+                                                    value={isExpanded ? fullText : post.text.substring(0, 100) + '...'}
+                                                    readOnly={true} // Set to read-only mode since it's for display
+                                                    theme="bubble" // You can also use 'snow' or 'bubble' themes
+                                                />
+                                                {/* {!isExpanded ? text : fullText} */}
+                                                {isLongPost && (
+                                                    <Link onClick={() => handleLengthToggle(post.Postid)}>
+                                                        {!isExpanded ? "Read More" : "Read Less"}
+                                                    </Link>
+                                                )}
                                             </p>
                                             {
                                                 post.imageUrl &&

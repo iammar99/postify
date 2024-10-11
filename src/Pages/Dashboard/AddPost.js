@@ -4,7 +4,8 @@ import { fireStore, storage } from 'Config/firebase';
 import { doc, setDoc, updateDoc, collection } from "firebase/firestore";
 import { message } from 'antd';
 import Spinner from 'Components/Spinner/Spinner';
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export default function AddPost() {
 
@@ -25,15 +26,25 @@ export default function AddPost() {
   let day = new Date().getDate()
   let year = new Date().getFullYear()
 
-  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   month = months[month]
   let today = `${day} ${month} ${year}`
 
   // Id
   let Postid = Math.random().toString()
   Postid = Postid.slice(2)
+  const handleChange = (value, name = 'post') => {
+    // If 'value' is a string, it's the content from ReactQuill
+    if (typeof value === 'string') {
+      setText(s => ({ ...s, [name]: value }));  // Update Quill content with the name 'post'
+    } else {
+      // For other input elements
+      const e = value;  // Normal input event
+      setText(s => ({ ...s, [e.target.name]: e.target.value }));  // Handle other inputs
+    }
+    console.log(text)
+  };
 
-  const handleChange = (e) => { setText(s => ({ ...s, [e.target.name]: e.target.value })) }
 
   const handleFile = (e) => {
     setFile(e.target.files[0])
@@ -81,11 +92,11 @@ export default function AddPost() {
               createrUsername: user.username,
               createrProfile: user.imageUrl,
               dateCreated: today,
-              text: text.post,
+              text: text,
               imageUrl,
               Postid,
               likes: 0,
-              imgName : file.name
+              imgName: file.name
             }
             if (imageUrl) {
               setIsProccessing(false)
@@ -122,11 +133,12 @@ export default function AddPost() {
           createrUsername: user.username,
           createrProfile: user.imageUrl,
           dateCreated: today,
-          text: text.post,
+          text: text,
           Postid,
           likes: 0
         }
-        await setDoc(doc(fireStore, "Posts", Postid), post);
+        console.log(post)
+        // await setDoc(doc(fireStore, "Posts", Postid), post);
         setIsProccessing(false)
         message.success("Posted")
       }
@@ -145,8 +157,18 @@ export default function AddPost() {
       <div className="container-fluid">
         <div className="row">
           <div className="col  my-5 d-flex justify-content-between flex-column align-items-center">
-            <textarea name="post" onFocus={handleFocus} onChange={handleChange} id="postTextarea" style={{ "resize": "none" }} className='post-box' placeholder='Enter Your Thoughts'>
-            </textarea>
+            {/* <textarea name="post" onFocus={handleFocus} onChange={handleChange} id="postTextarea" style={{ "resize": "none" }} className='post-box' placeholder='Enter Your Thoughts'>
+            </textarea> */}
+            <ReactQuill
+              theme="snow"
+              // name="post"
+              // onChange={handleChange}
+              value={text} onChange={setText}
+              className='post-box'
+              placeholder='Enter Your Thoughts'
+              style={{ height: '400px', width: '100%' }}
+            />
+
 
             {/* uiVerse file input template */}
             <div className="filecontainer d-flex flex-column  align-items-center justify-content-evenly align-items-sm-end  flex-sm-row " style={{ "width": "38%" }}>
