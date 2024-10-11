@@ -6,7 +6,9 @@ import { fireStore } from 'Config/firebase';
 import Loader from 'Components/DataLoader/Loader' // Loader
 import profileImg from "../../Assets/user.png" // For Alternative profile image
 import { Space, Input, Button, message } from 'antd'; // For comment input 
-import { formatDistanceToNow } from 'date-fns'; // for formatting date
+import Heart from 'Components/OtherComponents/Heart';
+import EditPencil from 'Components/OtherComponents/EditPencil';
+import DelBin from 'Components/OtherComponents/DelBin';
 
 export default function Home() {
 
@@ -14,7 +16,8 @@ export default function Home() {
     const [posts, setPosts] = useState([])  // For Handling Post
     const [expandedPosts, setExpandedPosts] = useState({}); // For Handling length of description
     const [commentingPosts, setCommentingPosts] = useState({}); // For Handling Display of comment
-    const [comment, setComment] = useState({}); // For Handling  comment
+    const [comment, setComment] = useState(null); // For Handling  comment
+    const [isEditing, setIsEditing] = useState(false); // For editing  comment
     const [currentUser, setCurrentUser] = useState(null); // For Handling current user
     let newDate = new Date()
 
@@ -63,7 +66,23 @@ export default function Home() {
         }));
     };
 
+    // For handling comment ID
+
+    function generateRandomString() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+
+        for (let i = 0; i < 7; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            result += characters[randomIndex];
+        }
+
+        return result;
+    }
+
+
     // For handling Post Comments (specific to each post)
+
 
     const handleCommentsToggle = (postId) => {
         setCommentingPosts((prevState) => ({
@@ -71,6 +90,7 @@ export default function Home() {
             [postId]: !prevState[postId],
         }));
         setComment({
+            commmentID: generateRandomString(),
             commenterId: currentUser.userId,
             commenterProfile: currentUser.imageUrl,
             commenterName: currentUser.username,
@@ -79,30 +99,118 @@ export default function Home() {
     };
 
     const handleComments = async (post) => {
-        if(!comment.comment){
-            message.warning("Comment can't be empty")
-            return 
-        }
+
         let postId = post.Postid
-        setCommentingPosts((prevState) => ({
-            ...prevState,
-            [postId]: false,
-        }));
-        if (post.comments) {
-            post.comments.push(comment)
+        // For adding new comment 
+        if (!isEditing) {
+            if (Object.keys(currentUser).length === 0) {
+                message.warning("Log In to comment")
+                console.log(currentUser)
+                return
+            }
+            if (!comment.comment) {
+                message.warning("Comment can't be empty")
+                return
+            }
+            setCommentingPosts((prevState) => ({
+                ...prevState,
+                [postId]: false,
+            }));
+            if (post.comments) {
+                post.comments.push(comment)
+            }
+            else {
+                post.comments = [comment]
+            }
         }
+        // For editing
         else {
-            post.comments = [comment]
+            let index = post.comments.findIndex((cmnt) => cmnt.commmentID === comment.commmentID);
+            post.comments[index] = comment;
+            let newArr = posts.map((doc) => {
+                if (doc.Postid === postId) {
+                    return post
+                } else {
+                    return doc
+                }
+            })
+            setPosts(newArr)
+            setComment({})
+            setIsEditing(false)
         }
         await setDoc(doc(fireStore, "Posts", postId), {
             ...post,
         });
-        // console.log(post.comments)
     };
 
     const handleCommentChange = (e) => {
         setComment(s => ({ ...s, [e.target.name]: e.target.value }))
     }
+
+    //  For handling Comment likes
+
+    const handleCommentLike = async (post, id) => {
+        let postId = post.Postid
+        let index = post.comments.findIndex((cmnt) => cmnt.commmentID === id);
+
+        if (index !== -1) {
+            let cmnt = post.comments[index];
+
+            if (cmnt.likes) {
+                cmnt.likes += 1;
+            } else {
+                cmnt.likes = 1;
+            }
+
+            post.comments[index] = cmnt;
+        }
+        let newArr = posts.map((doc) => {
+            if (doc.Postid === postId) {
+                return post
+            } else {
+                return doc
+            }
+        })
+        setPosts(newArr)
+        await setDoc(doc(fireStore, "Posts", postId), {
+            ...post,
+        });
+        console.log(post.comments)
+    }
+
+    //  For handling Comment Edit
+
+    const handleCommentEdit = (post, id, e) => {
+        setIsEditing(true)
+        let postId = post.Postid
+        let cmnt = post.comments.find((cmnt) => {
+            return id === cmnt.commmentID
+        })
+        setComment(cmnt)
+    }
+
+
+    //  For handling Comment del
+
+    const handleCommentDel = async (post, id) => {
+        let postId = post.Postid
+        let newcmnts = post.comments.filter((cmnt) => {
+            return id !== cmnt.commmentID
+        })
+        post.comments = newcmnts
+        let newArr = posts.map((doc) => {
+            if (doc.Postid === postId) {
+                return post
+            } else {
+                return doc
+            }
+        })
+        setPosts(newArr)
+        await setDoc(doc(fireStore, "Posts", postId), {
+            ...post,
+        });
+    }
+
 
     // function to close comment section on scroll
 
@@ -214,8 +322,8 @@ export default function Home() {
                                                                 width: '100%',
                                                             }}
                                                         >
-                                                            <Input name="comment" placeholder='Comment your thoughts' onChange={handleCommentChange} />
-                                                            <Button type="primary" onClick={() => handleComments(post)} >Comment</Button>
+                                                            <Input name="comment" placeholder='Comment your thoughts' onChange={handleCommentChange} value={comment.comment} />
+                                                            <Button type="primary" onClick={() => handleComments(post)} >{isEditing ? "Confirm" : "Comment"}</Button>
                                                         </Space.Compact>
                                                         <div className="comment-text m-0">
                                                             {
@@ -254,16 +362,32 @@ export default function Home() {
 
                                                                                 return (
                                                                                     <div className="comment-box my-3" key={i}>
-                                                                                        <div className="d-flex align-items-center">
-                                                                                            <img src={comment.commenterProfile} className='commenter-profile' alt="" />
-                                                                                            <div className="d-flex flex-column ms-3">
-                                                                                                <div className="d-flex align-items-center">
-                                                                                                    <b>{comment.commenterName}</b>
-                                                                                                    <div className="date ms-3" style={{"color":"#9ca4ab","fontSize":"16px"}}>
-                                                                                                        {timePassed(comment.commentDate)}
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <div className="d-flex align-items-center">
+                                                                                                <img src={comment.commenterProfile} className='commenter-profile' alt="" />
+                                                                                                <div className="d-flex flex-column ms-3">
+                                                                                                    <div className="d-flex align-items-center">
+                                                                                                        <b>{comment.commenterName}</b>
+                                                                                                        <div className="date ms-3" style={{ "color": "#9ca4ab", "fontSize": "16px" }}>
+                                                                                                            {timePassed(comment.commentDate)}
+                                                                                                        </div>
                                                                                                     </div>
+                                                                                                    <div className='m-0'>{comment.comment}</div>
                                                                                                 </div>
-                                                                                                <div className='m-0'>{comment.comment}</div>
+                                                                                            </div>
+                                                                                            <div className='d-flex align-items-center'>
+                                                                                                {
+                                                                                                    Object.keys(currentUser).length === 0
+                                                                                                        ?
+                                                                                                        <></>
+                                                                                                        :
+                                                                                                        <>
+                                                                                                            <DelBin onClick={() => { handleCommentDel(post, comment.commmentID) }} marginRight="10px" />
+                                                                                                            <EditPencil onClick={() => { handleCommentEdit(post, comment.commmentID) }} />
+                                                                                                        </>
+                                                                                                }
+                                                                                                <Heart onClick={() => handleCommentLike(post, comment.commmentID)} />
+                                                                                                {comment.likes == undefined ? 0 : comment.likes}
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>

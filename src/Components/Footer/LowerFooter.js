@@ -68,7 +68,7 @@ export default function LowerFooter() {
           <div className="row">
             <div className="col">
               <p className="text-center text-white fw-medium mb-5 mb-lg-0 py-4">
-                 Copyright &copy; {date} | All Rights Reserved by <Link target='_blank' to={"https://iammar99.github.io/My_Portfolio/"}>Ammar</Link>
+                 Copyright &copy; {date} | All Rights Reserved by <Link target='_blank' to={"https://ch-ammar.vercel.app/"}>Ammar</Link>
               </p>
             </div>
           </div>
