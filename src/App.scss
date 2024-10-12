@@ -11,7 +11,7 @@ $themeColor : #5dade2;
 @import './SCSS/Components/dataLoader';
 @import './SCSS/Components/heart';
 // -------------- Auth --------------
-@import './SCSS/auth/login.scss';
+@import './SCSS/Auth/login.scss';
 // -------------- Dashboard --------------
 @import './SCSS/Dashboard/profile.scss';
 @import './SCSS/Dashboard/setting.scss';
@@ -23,16 +23,16 @@ $themeColor : #5dade2;
 
 
 
-#root{
+#root {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-main{
+main {
     flex: 1 0 auto;
 }
 
-::-webkit-scrollbar{
-    display : none;
+::-webkit-scrollbar {
+    display: none;
 }
