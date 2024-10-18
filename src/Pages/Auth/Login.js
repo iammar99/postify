@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 // --------------------- Firebase ---------------------
 import { auth, fireStore } from 'Config/firebase'
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDocs , doc, setDoc  } from "firebase/firestore";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+// import { doc, setDoc } from "firebase/firestore";
 // --------------------- Notification ---------------------
 import { message } from 'antd';
 import Spinner from 'Components/Spinner/Spinner';
+import GoogleBtn from 'Components/OtherComponents/GoogleBtn';
 import { useAuthContext } from 'Context/AuthContext';
 
 
@@ -17,10 +18,48 @@ export default function Login() {
   const [checked, setChecked] = useState(false)
   const [isProccessing, setIsProccessing] = useState(false)
   const { dispatch } = useAuthContext()
-  let userObj = {} 
+  let userObj = {}
 
 
   const handleChange = e => setState(s => ({ ...s, [e.target.name]: e.target.value }))
+
+
+
+
+  // ---------- Google Register ----------
+
+  const handleGoogleAuth = async (e) => {
+    e.preventDefault();
+    let provider = new GoogleAuthProvider();
+    
+    signInWithPopup(auth, provider)
+      .then(async (result) => {    
+        const user = result.user;
+        const userData = {
+          userId: user.uid,
+          username: user.displayName,
+          email: user.email,
+          imageUrl: user.photoURL
+        };
+    
+        try {
+          await setDoc(doc(fireStore, "Users", user.uid), userData);
+          localStorage.setItem("Token", "True")
+          localStorage.setItem("user", JSON.stringify(userData))
+          dispatch({ type: "Set_Logged_In", payload: { userData } })
+          message.success("Logged In")
+        } catch (error) {
+          console.error("Error writing user data to Firestore:", error);  
+        }
+    
+      })
+      .catch((error) => { 
+      });
+    
+  }
+
+
+  // ---------- Simple Register ----------
 
   const handleSubmit = async (e) => {
     setIsProccessing(true)
@@ -144,8 +183,17 @@ export default function Login() {
         <Link to={"/auth/reset"} className='form-links'>
           Forgot Password ?
         </Link>
+        {/* ------ Other methods ------------- */}
+        <div className="or-lines">
+          <span className="or">
+            OR
+          </span>
+        </div>
+        <div className="other_methods d-flex">
+          {/* Google */}
+          <GoogleBtn title="Continue" onClick={handleGoogleAuth} />
+        </div>
       </form>
-
     </main>
   )
 }

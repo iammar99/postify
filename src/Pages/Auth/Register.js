@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 // --------------------- Firebase ---------------------
-import { auth, fireStore } from 'Config/firebase'
-import { createUserWithEmailAndPassword  , updateProfile } from 'firebase/auth'
+import { auth, fireStore, provider } from 'Config/firebase'
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider   } from 'firebase/auth'
 import { doc, setDoc } from "firebase/firestore";
 // --------------------- Notification ---------------------
 import { message } from 'antd';
 import Spinner from 'Components/Spinner/Spinner';
 import { useAuthContext } from 'Context/AuthContext';
+import GoogleBtn from 'Components/OtherComponents/GoogleBtn';
 
 
 export default function Register() {
@@ -16,9 +17,12 @@ export default function Register() {
   const [checked, setChecked] = useState(false)
   const [confirmChecked, setConfirmChecked] = useState(false)
   const [isProccessing, setIsProccessing] = useState(false)
-  const {dispatch} = useAuthContext()
+  const { dispatch } = useAuthContext()
 
   const handleChange = e => setState(s => ({ ...s, [e.target.name]: e.target.value }))
+
+
+  // ---------- Simple Register ----------
 
   const handleSubmit = async (e) => {
     setIsProccessing(true)
@@ -34,7 +38,7 @@ export default function Register() {
         setIsProccessing(false)
       }
       else {
-        createUserWithEmailAndPassword(auth, email, password )
+        createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
@@ -53,7 +57,7 @@ export default function Register() {
               // ...
             });
             localStorage.setItem("Token", "True")
-            localStorage.setItem("user",JSON.stringify(userToStore))
+            localStorage.setItem("user", JSON.stringify(userToStore))
             dispatch({ type: "Set_Logged_In", payload: { userToStore } })
             setDoc(doc(fireStore, "Users", userId), userToStore);
             message.success("Registered")
@@ -198,7 +202,7 @@ export default function Register() {
             {
               isProccessing
                 ?
-                <Spinner/>
+                <Spinner />
                 :
                 "Register"
             }

@@ -1,7 +1,6 @@
-
 // =======================================  LOGIN =======================================
 
-h1.login-heading  {
+h1.login-heading {
     position: absolute;
     color: white;
     top: 18px;
@@ -99,11 +98,12 @@ a.form-links {
     height: fit-content;
     transition: all 0.3s ease-in-out;
 }
+
 a.form-links:hover {
     color: $themeColor;
 }
 
-a.form-links:after{
+a.form-links:after {
     content: "";
     position: absolute;
     background-color: $themeColor;
@@ -112,8 +112,9 @@ a.form-links:after{
     left: 0;
     bottom: -10px;
     transition: 0.3s;
-} 
-a.form-links:hover:after{
+}
+
+a.form-links:hover:after {
     width: 100%;
 }
 
@@ -143,17 +144,92 @@ form.register {
     font-weight: 900;
 }
 
-form.reset{
+form.reset {
     padding: 32px 45px;
 }
+
+
+// =======================================  Other Authentications =======================================
+
+
+.or-lines {
+    display: flex;
+    justify-content: center;
+}
+
+span.or {
+    color: #6c757d;
+}
+
+// span.or:after {
+//     content: "";
+//     background: #6c757d;
+//     width: 37%;
+//     height: 2px;
+//     position: absolute;
+//     bottom: 47px;
+//     right: 53px;
+// }
+
+
+// span.or:before {
+//     content: "";
+//     background: #6c757d;
+//     width: 37%;
+//     height: 2px;
+//     position: absolute;
+//     left: 50px;
+//     bottom: 47px;
+// }
+
+// ======================= Google =======================
+
+/* From Uiverse.io by LightAndy1 */
+.signin {
+    float: right;
+    max-width: 320px;
+    display: flex;
+    padding: 0.5rem 1.4rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    gap: 0.75rem;
+    color: #c4d2dc;
+    background-color: #19242b;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0, 0.87, 0.12, 1);
+}
+
+.signin:hover {
+    transform: scale(1.025);
+}
+
+.signin:active {
+    transform: scale(0.975);
+}
+
+button svg {
+    height: 24px;
+    width: auto;
+}
+
 
 
 // =======================================  Media Queries =======================================
 
 @media screen and (max-width:991px) {
-    form ,form.register{
+
+    form,
+    form.register {
         width: 70%;
     }
+
     .reset-heading {
         top: 181px;
         font-size: 60px;
@@ -162,21 +238,30 @@ form.reset{
 
 
 @media screen and (max-width:551px) {
-    form , form.register{
+
+    form,
+    form.register {
         width: 100%;
     }
- .register-heading {
+
+    .register-heading {
         top: 9px;
         font-size: 100px;
     }
+
     .reset-heading {
         top: 193px;
         font-size: 45px;
     }
+
+    // span.or:after,
+    // span.or:before {
+    //     width: 25%;
+    // }
 }
 
 @media screen and (max-width:441px) {
-    h1.login-heading  {
+    h1.login-heading {
         top: 31px;
         font-size: 130px;
     }

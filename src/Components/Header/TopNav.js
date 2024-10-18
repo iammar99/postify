@@ -17,6 +17,7 @@ export default function TopNav() {
   if (auth) {
     if (user.imageUrl) {
       userImg = user.imageUrl
+      console.log(userImg)
     }
     else {
       userImg = userLogo
