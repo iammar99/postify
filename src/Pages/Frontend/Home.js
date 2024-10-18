@@ -10,6 +10,7 @@ import Heart from 'Components/OtherComponents/Heart';
 import EditPencil from 'Components/OtherComponents/EditPencil';
 import DelBin from 'Components/OtherComponents/DelBin';
 import ReactQuill from 'react-quill';
+import AddBtn from 'Components/OtherComponents/AddBtn';
 
 export default function Home() {
 
@@ -414,20 +415,6 @@ export default function Home() {
                                                                     </>
                                                             }
                                                         </div>
-                                                        {/* Input from  UI verse  */}
-                                                        {/* <div className="group">
-                                                            <input
-                                                                className="input"
-                                                                required
-                                                                type="text"
-                                                            />
-                                                            <span className="highlight" />
-                                                            <span className="bar" />
-                                                            <label>
-                                                                Comment
-                                                            </label>
-                                                        </div> */}
-                                                        {/* <button onClick={() => handleComments(post)}>Submit</button> */}
                                                     </div>
                                                 </div>
                                             )}
@@ -438,6 +425,7 @@ export default function Home() {
                         }
                     </>
             }
+            <AddBtn/>
         </main>
     )
 }

@@ -69,4 +69,4 @@ To run the project locally, follow these steps:
 
 ## Live Link
 
-[Postify](dsa)
+[Postify](https://postify-pi.vercel.app/)
