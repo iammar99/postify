@@ -1,110 +1,21 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function AddBtn() {
     return (
-        <div className="wrapper">
-            <input type="checkbox" id="toogle" className="hidden-trigger" />
-            <label htmlFor="toogle" className="circle">
+        <Link to={"/dashboard/addPost"} style={{"color":"white","textDecoration":"none"}}>
+            <button className="cssbuttons-io-button">
                 <svg
-                    className="svg"
+                    height={24}
+                    width={24}
+                    viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    width={48}
-                    height={48}
-                    xmlSpace="preserve"
-                    version="1.1"
-                    viewBox="0 0 48 48"
                 >
-                    <image
-                        width={48}
-                        height={48}
-                        xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAbElEQVR4Ae3XwQnFQAiE4eVVsGAP1mkPFjwvQvYSWCQYCYGZv4Dv5MGB5ghcIiDQI+kCftCzNsAR8y5gYu2rwCBAgMBTgEC3rek2yQEtAZoDjso8AyaKexmIDJUZD40AAQIE0gwx449GgMC9/t0b7GTsa7J+AAAAAElFTkSuQmCC"
-                    />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor" />
                 </svg>
-            </label>
-            <div className="subs">
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub1"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub1" />
-                </button>
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub2"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub2" />
-                </button>
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub3"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub3" />
-                </button>
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub4"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub4" />
-                </button>
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub5"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub5" />
-                </button>
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub6"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub6" />
-                </button>
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub7"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub7" />
-                </button>
-                <button className="sub-circle">
-                    <input
-                        defaultValue={1}
-                        name="sub-circle"
-                        type="radio"
-                        id="sub8"
-                        className="hidden-sub-trigger"
-                    />
-                    <label htmlFor="sub8" />
-                </button>
-            </div>
-        </div>
-
+                <span>Add</span>
+            </button>
+        </Link>
     )
 }
