@@ -95,7 +95,7 @@ export default function AddPost() {
               text: text,
               imageUrl,
               Postid,
-              likes: 0,
+              likes: [],
               imgName: file.name
             }
             if (imageUrl) {
@@ -104,6 +104,7 @@ export default function AddPost() {
             }
             setDoc(doc(fireStore, "Posts", Postid), post);
           } catch (error) {
+            message.error("Some Error Occured")
             console.log(error)
           }
         });
@@ -135,12 +136,17 @@ export default function AddPost() {
           dateCreated: today,
           text: text,
           Postid,
-          likes: 0
+          likes: []
         }
         console.log(post)
-        // await setDoc(doc(fireStore, "Posts", Postid), post);
-        setIsProccessing(false)
-        message.success("Posted")
+        try {
+          await setDoc(doc(fireStore, "Posts", Postid), post);
+          setIsProccessing(false)
+          message.success("Posted")
+
+        } catch (error) {
+          message.error("Some Error Occured")
+        }
       }
     }
   }
