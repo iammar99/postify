@@ -68,7 +68,7 @@ export default function Home() {
                 ...updatedPost,
             });
         }
-        
+
     }
 
     // For handling Post length
@@ -175,9 +175,17 @@ export default function Home() {
             let cmnt = post.comments[index];
 
             if (cmnt.likes) {
-                cmnt.likes += 1;
-            } else {
-                cmnt.likes = 1;
+                if (cmnt.likes.length >= 1) {
+                    if (cmnt.likes.includes(currentUser.userId)) {
+                        console.log("Found")
+                        cmnt.likes = cmnt.likes.filter((like) => like !== currentUser.userId);
+                    }
+                } else {
+                    cmnt.likes.push(currentUser.userId)
+                }
+            }
+            else{
+                cmnt.likes = [currentUser.userId]
             }
 
             post.comments[index] = cmnt;
@@ -193,7 +201,6 @@ export default function Home() {
         await setDoc(doc(fireStore, "Posts", postId), {
             ...post,
         });
-        console.log(post.comments)
     }
 
     //  For handling Comment Edit
@@ -261,7 +268,8 @@ export default function Home() {
                                 const fullText = post.text;
                                 // For handling comment section 
                                 const isCommenting = commentingPosts[post.Postid];
-
+                                // For handling Like Color
+                                const isLikedByCurrentUser = post.likes.some((like) => like.likedBy === currentUser.userId);
                                 return (
                                     <div key={i}>
                                         <div className='post-card'>
@@ -305,23 +313,11 @@ export default function Home() {
                                                 }
                                             </b>
                                             {/* Functions */}
-                                            <div className="d-flex justify-content-start function-container">
+                                            <div className="d-flex justify-content-start align-items-center function-container">
                                                 {/* For like */}
-                                                <button className="LikeBtn" onClick={() => handleLikes(post)}>
-                                                    <span className="leftContainer">
-                                                        <svg fill="white" height="1em" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-                                                        </svg>
-                                                        <span className="like">
-                                                            Like
-                                                        </span>
-                                                    </span>
-                                                    <span className="likeCount">
-                                                        {post.likes.length}
-                                                    </span>
-                                                </button>
-                                                {/* For comment */}
-                                                <div className="CommentBtn">
+                                                <Heart onClick={()=>{handleLikes(post)}} fill={isLikedByCurrentUser?"red":"black"}/>
+                                                {post.likes.length}
+                                                <div className="ms-3 CommentBtn">
                                                     <button className="bookmarkBtn" onClick={() => handleCommentsToggle(post.Postid)}>
                                                         <span className="IconContainer">
                                                             <svg fill="white" height="1em" viewBox="0 0 512 512">
@@ -388,7 +384,7 @@ export default function Home() {
                                                                                         return `${weeks}w `;
                                                                                     }
                                                                                 };
-
+                                                                                const isLikedByCurrentUser = comment.likes?.includes(currentUser.userId);
                                                                                 return (
                                                                                     <div className="comment-box my-3" key={i}>
                                                                                         <div className="d-flex justify-content-between">
@@ -415,8 +411,8 @@ export default function Home() {
                                                                                                             <EditPencil onClick={() => { handleCommentEdit(post, comment.commmentID) }} />
                                                                                                         </>
                                                                                                 }
-                                                                                                <Heart onClick={() => handleCommentLike(post, comment.commmentID)} />
-                                                                                                {comment.likes == undefined ? 0 : comment.likes}
+                                                                                                <Heart onClick={() => handleCommentLike(post, comment.commmentID)} fill={isLikedByCurrentUser?"red":"black"} />
+                                                                                                {comment.likes == undefined ? 0 : comment.likes.length}
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
