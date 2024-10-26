@@ -10,12 +10,15 @@ $themeColor : #5dade2;
 @import './SCSS/Components/uiBtn';
 @import './SCSS/Components/dataLoader';
 @import './SCSS/Components/heart';
+@import './SCSS/Components/messanger.scss';
+@import './SCSS/Components/chatLoader.scss';
 // -------------- Auth --------------
 @import './SCSS/Auth/login.scss';
 // -------------- Dashboard --------------
 @import './SCSS/Dashboard/profile.scss';
 @import './SCSS/Dashboard/setting.scss';
 @import "./SCSS/Dashboard/addPost.scss";
+@import './SCSS/Dashboard/clan.scss';
 // -------------- Frontend --------------
 @import './SCSS/Frontend/home.scss';
 

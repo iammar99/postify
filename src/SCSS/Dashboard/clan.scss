@@ -1,0 +1,24 @@
+#clan{
+    background-image: url(../../Assets/clanBg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.message-box {
+    background: #00b4d8;
+    color: white;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 10px 23px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.message-container {
+    display: flex;
+    align-items: center;
+    margin: 21px 25px;
+}
+

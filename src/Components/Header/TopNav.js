@@ -59,6 +59,11 @@ export default function TopNav() {
                   Add Post
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/dashboard/clan"}>
+                  Clan
+                </Link>
+              </li>
             </ul>
           </div>
           <Link to={"/dashboard/profile"} className='ms-3'>
