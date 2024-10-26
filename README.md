@@ -10,6 +10,7 @@
 - **Delete Posts**: Remove posts that are no longer relevant.
 - **Like Posts**: Engage with posts by liking them.
 - **Comment on Posts**: Share your thoughts on others' posts through comments.
+- **Chating**: Chatting introduced.
 - **Real-time Updates**: Experience real-time data syncing with Firebase Firestore.
 
 ## Technologies Used
